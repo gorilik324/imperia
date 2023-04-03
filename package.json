@@ -1,5 +1,6 @@
 {
     "name": "typescript-template",
+    "main": "dist/index.js",
     "private": true,
     "version": "0.1.0",
     "packageManager": "yarn@3.5.0",
@@ -15,6 +16,14 @@
         "rimraf": "rimraf ./dist/",
         "release": "release-it",
         "prepare": "husky install .github/husky"
+    },
+    "dependencies": {
+        "@sapphire/framework": "^4.2.2",
+        "@sapphire/plugin-logger": "^3.0.2",
+        "@sapphire/time-utilities": "^1.7.9",
+        "colorette": "^2.0.19",
+        "discord.js": "^14.9.0",
+        "dotenv": "^16.0.3"
     },
     "devDependencies": {
         "@commitlint/cli": "^17.5.1",
@@ -33,7 +42,7 @@
         "prettier": "^2.8.7",
         "release-it": "^15.10.0",
         "rimraf": "^4.4.1",
-        "typescript": "^5.0.3"
+        "typescript": "^5.1.0-dev.20230403"
     },
     "eslintConfig": {
         "parser": "@typescript-eslint/parser",
@@ -63,7 +72,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/aeviterna/typescript-template.git"
+        "url": "https://github.com/aeviterna/imperia.git"
     },
     "author": {
         "name": "aeviterna",
@@ -75,10 +84,10 @@
         ]
     },
     "lint-staged": {
-      "src/**/*.ts": [
-        "yarn lint",
-        "yarn format"
-      ]
+        "src/**/*.ts": [
+            "yarn lint",
+            "yarn format"
+        ]
     },
     "release-it": {
         "git": {

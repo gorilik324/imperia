@@ -22,17 +22,10 @@
  * THE SOFTWARE.
  */
 
-import "dotenv/config";
-import "@sapphire/plugin-logger/register";
-import { createColors } from "colorette";
-import { ImperiaClient } from "#/extensions/ImperiaClient";
-import { configuration } from "./configuration";
+import { Events as SapphireEvents } from "@sapphire/framework";
+const Events = {};
 
-process.env.NODE_ENV ??= "development";
-createColors({ useColor: true });
-
-async function main() {
-    void new ImperiaClient(configuration).login(process.env.DISCORD_TOKEN);
-}
-
-void main();
+export const ImperiaEvents = {
+    ...SapphireEvents,
+    ...Events,
+};

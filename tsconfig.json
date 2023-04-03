@@ -20,7 +20,15 @@
     "esModuleInterop": true,
     "lib": [
       "ESNext"
-    ]
+    ],
+    "paths": {
+      "#/extensions/*": [
+        "./lib/extensions/*"
+      ],
+      "#/typings/*": [
+        "./lib/typings/*"
+      ],
+    }
   },
   "exclude": [
     ".github",

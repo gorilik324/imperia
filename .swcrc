@@ -8,10 +8,18 @@
         },
         "parser": {
             "syntax": "typescript",
-            "decorators": true
+            "decorators": false
         },
         "target": "es2020",
-        "baseUrl": "./src"
+        "baseUrl": "./src",
+        "paths": {
+          "#/extensions/*": [
+            "./lib/extensions/*"
+          ],
+          "#/typings/*": [
+              "./lib/typings/*"
+          ]
+        }
     },
     "module": {
         "type": "commonjs"

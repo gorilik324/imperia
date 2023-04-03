@@ -22,17 +22,24 @@
  * THE SOFTWARE.
  */
 
-import "dotenv/config";
-import "@sapphire/plugin-logger/register";
-import { createColors } from "colorette";
-import { ImperiaClient } from "#/extensions/ImperiaClient";
-import { configuration } from "./configuration";
+import { Listener } from "@sapphire/framework";
+import { ImperiaEvents } from "#/typings/imperia";
 
-process.env.NODE_ENV ??= "development";
-createColors({ useColor: true });
+export class ReadyListener extends Listener {
+    public constructor(context: Listener.Context) {
+        super(context, {
+            once: true,
+            event: ImperiaEvents.ClientReady,
+        });
+    }
 
-async function main() {
-    void new ImperiaClient(configuration).login(process.env.DISCORD_TOKEN);
+    public async run() {
+        const userCount = this.container.client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
+        const guildCount = this.container.client.guilds.cache.size;
+
+        this.container.logger.info(`ReadyListener: Logged in as ${this.container.client.user?.tag}!`);
+        this.container.logger.info(`ReadyListener: Serving ${guildCount} guilds and ${userCount} users!`);
+        this.container.logger.info(`ReadyListener: Loaded ${this.container.stores.get("commands").size} commands.`);
+        this.container.logger.info(`ReadyListener: Loaded ${this.container.stores.get("listeners").size} listeners.`);
+    }
 }
-
-void main();

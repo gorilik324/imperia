@@ -22,17 +22,35 @@
  * THE SOFTWARE.
  */
 
-import "dotenv/config";
-import "@sapphire/plugin-logger/register";
-import { createColors } from "colorette";
-import { ImperiaClient } from "#/extensions/ImperiaClient";
-import { configuration } from "./configuration";
+import {
+    ApplicationCommandRegistries,
+    RegisterBehavior,
+    SapphireClient,
+    SapphireClientOptions,
+} from "@sapphire/framework";
+import { ClientOptions } from "discord.js";
 
-process.env.NODE_ENV ??= "development";
-createColors({ useColor: true });
-
-async function main() {
-    void new ImperiaClient(configuration).login(process.env.DISCORD_TOKEN);
+/**
+ * @description The options for the ImperiaClient class.
+ */
+export interface ImperiaClientOptions extends SapphireClientOptions, ClientOptions {
+    enableAnalytics?: boolean;
+    overrideApplicationCommandRegistries?: boolean;
 }
 
-void main();
+/**
+ * @description The ImperiaClient class.
+ * @extends SapphireClient
+ */
+export class ImperiaClient extends SapphireClient {
+    /**
+     * @description The constructor for the ImperiaClient class.
+     * @param options - The options for the client.
+     */
+    public constructor(options: ImperiaClientOptions) {
+        super(options);
+
+        if (options.overrideApplicationCommandRegistries)
+            ApplicationCommandRegistries.setDefaultBehaviorWhenNotIdentical(RegisterBehavior.BulkOverwrite);
+    }
+}

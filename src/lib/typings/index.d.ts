@@ -22,17 +22,13 @@
  * THE SOFTWARE.
  */
 
-import "dotenv/config";
-import "@sapphire/plugin-logger/register";
-import { createColors } from "colorette";
-import { ImperiaClient } from "#/extensions/ImperiaClient";
-import { configuration } from "./configuration";
+declare namespace NodeJS {
+    interface ProcessEnv {
+        DATABASE_URL: string;
+        DISCORD_TOKEN: string;
+        DEFAULT_PREFIX: string;
+        NODE_ENV: "development" | "production";
 
-process.env.NODE_ENV ??= "development";
-createColors({ useColor: true });
-
-async function main() {
-    void new ImperiaClient(configuration).login(process.env.DISCORD_TOKEN);
+        ANALYTICS_ENABLED: "true" | "false";
+    }
 }
-
-void main();
