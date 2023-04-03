@@ -1,0 +1,114 @@
+{
+    "name": "typescript-template",
+    "private": true,
+    "version": "0.1.0",
+    "packageManager": "yarn@3.5.0",
+    "scripts": {
+        "build": "yarn run-s rimraf compile",
+        "compile": "yarn swc src -d dist",
+        "compile:watch": "yarn swc src -d dist -w",
+        "start": "node dist/index.js",
+        "format": "prettier --write ./src",
+        "check:format": "prettier --check ./src",
+        "lint": "eslint src --ext ts --fix",
+        "check:lint": "eslint src --ext ts",
+        "rimraf": "rimraf ./dist/",
+        "release": "release-it",
+        "prepare": "husky install .github/husky"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^17.5.1",
+        "@commitlint/config-conventional": "^17.4.4",
+        "@release-it/conventional-changelog": "^5.1.1",
+        "@swc/cli": "^0.1.62",
+        "@swc/core": "^1.3.44",
+        "@types/node": "^18.15.11",
+        "@typescript-eslint/eslint-plugin": "^5.57.0",
+        "@typescript-eslint/parser": "^5.57.0",
+        "eslint": "^8.37.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "husky": "^8.0.3",
+        "lint-staged": "^13.2.0",
+        "npm-run-all": "^4.1.5",
+        "prettier": "^2.8.7",
+        "release-it": "^15.10.0",
+        "rimraf": "^4.4.1",
+        "typescript": "^5.0.3"
+    },
+    "eslintConfig": {
+        "parser": "@typescript-eslint/parser",
+        "extends": [
+            "eslint:recommended",
+            "plugin:@typescript-eslint/recommended"
+        ],
+        "plugins": [
+            "@typescript-eslint",
+            "prettier"
+        ],
+        "ignorePatterns": [
+            "dist",
+            "node_modules",
+            ".yarn"
+        ]
+    },
+    "prettier": {
+        "semi": true,
+        "trailingComma": "es5",
+        "tabWidth": 4,
+        "bracketSpacing": true,
+        "singleQuote": false,
+        "arrowParens": "always",
+        "quoteProps": "consistent",
+        "printWidth": 120
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/aeviterna/typescript-template.git"
+    },
+    "author": {
+        "name": "aeviterna",
+        "url": "https://github.com/aeviterna"
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    },
+    "lint-staged": {
+      "src/**/*.ts": [
+        "yarn lint",
+        "yarn format"
+      ]
+    },
+    "release-it": {
+        "git": {
+            "commitMessage": "chore: release v${version}"
+        },
+        "npm": {
+            "publish": false
+        },
+        "github": {
+            "release": true
+        },
+        "plugins": {
+            "@release-it/conventional-changelog": {
+                "preset": "angular",
+                "infile": "CHANGELOG.md",
+                "types": [
+                    {
+                        "type": "feat",
+                        "section": "Features"
+                    },
+                    {
+                        "type": "fix",
+                        "section": "Bug Fixes"
+                    },
+                    {
+                        "type": "refactor",
+                        "section": "Code Refactoring"
+                    }
+                ]
+            }
+        }
+    }
+}
