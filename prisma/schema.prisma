@@ -1,0 +1,41 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              String           @id @default(cuid())
+  discordId       String
+  UserEconomy     UserEconomy?
+  UserProgression UserProgression?
+  createdAt       DateTime         @default(now()) @db.Timestamptz()
+
+  @@unique([discordId])
+  @@map("users")
+}
+
+model UserEconomy {
+  id       String @id @default(cuid())
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+  crystals Int    @default(0)
+  fates    Int    @default(0)
+
+  @@unique([userId])
+  @@map("user_economy")
+}
+
+model UserProgression {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  level  Int    @default(1)
+  exp    Int    @default(0)
+
+  @@unique([userId])
+  @@map("user_progression")
+}

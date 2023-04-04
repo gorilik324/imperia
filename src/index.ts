@@ -31,7 +31,10 @@ import { configuration } from "./configuration";
 process.env.NODE_ENV ??= "development";
 createColors({ useColor: true });
 
-async function main() {
+/**
+ * @description Bootstraps the client.
+ */
+async function main(): Promise<void> {
     void new ImperiaClient(configuration).login(process.env.DISCORD_TOKEN);
 }
 
