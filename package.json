@@ -1,5 +1,5 @@
 {
-    "name": "typescript-template",
+    "name": "imperia",
     "main": "dist/index.js",
     "private": true,
     "version": "0.1.0",
