@@ -15,6 +15,9 @@
         "check:lint": "eslint src --ext ts",
         "rimraf": "rimraf ./dist/",
         "release": "release-it",
+        "release:patch": "release-it patch",
+        "release:minor": "release-it minor",
+        "release:major": "release-it major",
         "prepare": "husky install .github/husky"
     },
     "dependencies": {
