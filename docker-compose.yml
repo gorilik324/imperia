@@ -4,7 +4,7 @@ services:
   imperia-bot:
     build:
       context: .
-      target: development
+      target: production
     env_file: .env
     volumes:
       - ./:/opt/app
