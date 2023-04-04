@@ -1,10 +1,29 @@
 version: '3.9'
 
 services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    hostname: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: imperia
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
   imperia-bot:
+    container_name: imperia-bot
     build:
       context: .
       target: production
+      dockerfile: Dockerfile
     env_file: .env
+    depends_on:
+      - postgres
     volumes:
       - ./:/opt/app
+volumes:
+    postgres-data:
