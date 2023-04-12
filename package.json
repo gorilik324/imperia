@@ -48,7 +48,7 @@
         "prisma": "^4.12.0",
         "release-it": "^15.10.0",
         "rimraf": "^5.0.0",
-        "typescript": "^5.1.0-dev.20230403"
+        "typescript": "^5.0.4"
     },
     "eslintConfig": {
         "parser": "@typescript-eslint/parser",

@@ -1,4 +1,5 @@
 {
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "jsc": {
         "minify": {
             "compress": {
@@ -13,12 +14,8 @@
         "target": "es2020",
         "baseUrl": "./src",
         "paths": {
-          "#/extensions/*": [
-            "./lib/extensions/*"
-          ],
-          "#/typings/*": [
-              "./lib/typings/*"
-          ]
+            "#/extensions/*": ["./lib/extensions/*"],
+            "#/typings/*": ["./lib/typings/*"]
         }
     },
     "module": {
