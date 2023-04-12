@@ -1,12 +1,14 @@
 name: Continuous Integration
 
 on:
+    pull_request: {}
     push:
         branches:
             - master
-        pull_request:
-            branches:
-                - master
+
+concurrency:
+    group: ${{ github.job }}-${{ github.ref }}
+    cancel-in-progress: true
 
 jobs:
     lint:
@@ -15,27 +17,34 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v3
+
             - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
                   node-version: 18
                   cache: "yarn"
+
             - name: Install dependencies
-              run: yarn install --frozen-lockfile
+              uses: bahmutov/npm-install@v1
+
             - name: Lint code
               run: yarn check:lint
+
     format:
         name: Format code
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
               uses: actions/checkout@v3
+
             - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
                   node-version: 18
                   cache: "yarn"
+
             - name: Install dependencies
-              run: yarn install --frozen-lockfile
+              uses: bahmutov/npm-install@v1
+
             - name: Format code
               run: yarn check:format
