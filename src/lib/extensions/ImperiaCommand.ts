@@ -23,6 +23,7 @@
  */
 
 import { Subcommand, SubcommandOptions } from "@sapphire/plugin-subcommands";
+import { ChatInputCommand } from "@sapphire/framework";
 
 /**
  * @description The ImperiaCommand class.
@@ -39,6 +40,19 @@ export abstract class ImperiaCommand extends Subcommand {
         super(context, {
             ...options,
         });
+    }
+
+    /**
+     * @description The run method for the chat input command.
+     * @param interaction - The interaction for the command.
+     * @param context - The context for the command.
+     */
+    // @ts-ignore: Promise<unknown> instead of Promise<void>
+    public async chatInputRun(
+        interaction: ChatInputCommand.Interaction,
+        context: ChatInputCommand.RunContext
+    ): Promise<unknown> {
+        return super.chatInputRun(interaction, context);
     }
 }
 

@@ -49,14 +49,14 @@ export const configuration: ImperiaClientOptions = {
         GatewayIntentBits.DirectMessageReactions,
         GatewayIntentBits.MessageContent,
     ],
+    loadApplicationCommandRegistriesStatusListeners: process.env.NODE_ENV === "production",
     loadDefaultErrorListeners: true,
     loadMessageCommandListeners: true,
-    overrideApplicationCommandRegistries: true,
-    partials: [Partials.Channel, Partials.GuildMember, Partials.Message, Partials.Reaction],
-    typing: true,
     logger: {
         level: process.env.NODE_ENV === "production" ? LogLevel.Info : LogLevel.Debug,
     },
+    overrideApplicationCommandRegistries: true,
+    partials: [Partials.Channel, Partials.GuildMember, Partials.Message, Partials.Reaction],
     presence: {
         activities: [
             {
@@ -66,6 +66,7 @@ export const configuration: ImperiaClientOptions = {
         ],
         status: "dnd",
     },
+    typing: true,
 };
 
 /**

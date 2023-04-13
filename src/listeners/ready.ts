@@ -25,15 +25,27 @@
 import { Listener } from "@sapphire/framework";
 import { ImperiaEvents } from "#/typings/imperia";
 
+/**
+ * @description The ready listener.
+ * @extends Listener
+ */
 export class ReadyListener extends Listener {
+    /**
+     * @description The constructor for the ready listener.
+     * @param context - The listener context.
+     */
     public constructor(context: Listener.Context) {
         super(context, {
+            name: "ready",
             once: true,
             event: ImperiaEvents.ClientReady,
         });
     }
 
-    public async run() {
+    /**
+     * @description The run method for the ready listener.
+     */
+    public async run(): Promise<void> {
         const userCount = this.container.client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
         const guildCount = this.container.client.guilds.cache.size;
 
