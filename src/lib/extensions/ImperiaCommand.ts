@@ -22,21 +22,33 @@
  * THE SOFTWARE.
  */
 
-import "dotenv/config";
-import "@sapphire/plugin-logger/register";
-import "@sapphire/plugin-subcommands/register";
-import { createColors } from "colorette";
-import { ImperiaClient } from "#/extensions/ImperiaClient";
-import { configuration } from "./configuration";
-
-process.env.NODE_ENV ??= "development";
-createColors({ useColor: true });
+import { Subcommand, SubcommandOptions } from "@sapphire/plugin-subcommands";
 
 /**
- * @description Bootstraps the client.
+ * @description The ImperiaCommand class.
+ * @extends Subcommand
  */
-async function main(): Promise<void> {
-    void new ImperiaClient(configuration).login(process.env.DISCORD_TOKEN);
+export abstract class ImperiaCommand extends Subcommand {
+    /**
+     * @description The constructor for the ImperiaCommand class.
+     * @param context - The context for the command.
+     * @param options - The options for the command.
+     * @protected
+     */
+    protected constructor(context: Subcommand.Context, options: SubcommandOptions) {
+        super(context, {
+            ...options,
+        });
+    }
 }
 
-void main();
+export declare namespace ImperiaCommand {
+    type Options = SubcommandOptions;
+    type JSON = Subcommand.JSON;
+    type Context = Subcommand.Context;
+    type RunInTypes = Subcommand.RunInTypes;
+    type ChatInputCommandInteraction = Subcommand.ChatInputCommandInteraction;
+    type ContextMenuCommandInteraction = Subcommand.ContextMenuCommandInteraction;
+    type AutocompleteInteraction = Subcommand.AutocompleteInteraction;
+    type Registry = Subcommand.Registry;
+}
