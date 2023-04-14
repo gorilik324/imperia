@@ -25,6 +25,10 @@
 import { Utility } from "@sapphire/plugin-utilities-store";
 import { setTimeout } from "node:timers/promises";
 
+/**
+ * @description The service utilities.
+ * @extends Utility
+ */
 export class ServiceUtilities extends Utility {
     /**
      * @description The constructor for the service utilities.
@@ -40,6 +44,8 @@ export class ServiceUtilities extends Utility {
 
     /**
      * @description Get random number with minimum and maximum limits
+     * @param min - The minimum number.
+     * @param max - The maximum number.
      */
     public getRandomInt(min: number, max: number): number {
         min = Math.ceil(min);
@@ -49,6 +55,7 @@ export class ServiceUtilities extends Utility {
 
     /**
      * @description Randomize a array.
+     * @param array - The array to randomize.
      */
     public randomArray(array: string[]): string {
         return array[Math.floor(Math.random() * array.length)];
@@ -56,6 +63,8 @@ export class ServiceUtilities extends Utility {
 
     /**
      * @description Trims a string to a certain length.
+     * @param str - The string to trim.
+     * @param length - The length to trim to.
      */
     public trimString(str: string, length: number): string {
         return str.length > length ? str.substring(0, length) + "..." : str;
@@ -63,6 +72,7 @@ export class ServiceUtilities extends Utility {
 
     /**
      * @description Wait before fulfilling the promise.
+     * @param ms - The time to wait.
      */
     public wait(ms: number): Promise<void> {
         return setTimeout(ms);

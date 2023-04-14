@@ -39,6 +39,7 @@ export class TimeUtilities extends Utility {
 
     /**
      * @description Format milliseconds into human readable format.
+     * @param ms - The milliseconds to format.
      */
     public formatTime(ms: number): string {
         const seconds = Math.floor(ms / 1000);
@@ -62,6 +63,7 @@ export class TimeUtilities extends Utility {
 
     /**
      * @description Format miliseconds into 00:00:00 format.
+     * @param ms - The milliseconds to format.
      */
     public formatTimestamp(ms: number): string {
         const seconds = Math.floor(ms / 1000);
@@ -78,44 +80,51 @@ export class TimeUtilities extends Utility {
     }
 
     /**
-     * @description Convert minutes into milliseconds.
+     * @description Convert hours into days.
+     * @param hours - The hours to convert.
      */
-    hoursToDays(hours: number): number {
+    public hoursToDays(hours: number): number {
         return hours / 24;
     }
 
     /**
-     * @description Convert minutes into milliseconds.
+     * @description Convert minutes into hours.
+     * @param minutes - The minutes to convert.
      */
-    minutesToHours(minutes: number): number {
+    public minutesToHours(minutes: number): number {
         return minutes / 60;
     }
 
     /**
      * @description Convert minutes into milliseconds.
+     * @param minutes - The minutes to convert.
      */
-    minutesToMs(minutes: number): number {
+    public minutesToMs(minutes: number): number {
         return minutes * 60 * 1000;
     }
 
     /**
      * @description Convert milliseconds into seconds.
+     * @param ms - The milliseconds to convert.
      */
-    msToSeconds(ms: number): number {
+    public msToSeconds(ms: number): number {
         return ms / 1000;
     }
 
     /**
      * @description Convert milliseconds into day
+     * @param ms - The milliseconds to convert.
      */
-    msToDays(ms: number): number {
+    public msToDays(ms: number): number {
         return ms / (1000 * 60 * 60 * 24);
     }
 
     /**
      * @description Pad a string with a certain length.
+     * @param num - The number to pad.
+     * @param size - The size to pad to.
      */
-    pad(num: number, size: number): string {
+    public pad(num: number, size: number): string {
         let s = num + "";
         while (s.length < size) s = "0" + s;
         return s;
@@ -123,15 +132,17 @@ export class TimeUtilities extends Utility {
 
     /**
      * @description Convert seconds into milliseconds.
+     * @param seconds - The seconds to convert.
      */
-    secondsToMinutes(seconds: number): number {
+    public secondsToMinutes(seconds: number): number {
         return seconds / 60;
     }
 
     /**
      * @description Convert seconds into milliseconds.
+     * @param seconds - The seconds to convert.
      */
-    secondsToMs(seconds: number): number {
+    public secondsToMs(seconds: number): number {
         return seconds * 1000;
     }
 }
