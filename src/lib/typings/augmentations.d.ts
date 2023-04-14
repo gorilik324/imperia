@@ -24,8 +24,18 @@
 
 import { ImperiaClient } from "#/extensions/ImperiaClient";
 
+import { ServiceUtilities } from "../../utilities/service";
+import { TimeUtilities } from "../../utilities/time";
+
 declare module "@sapphire/pieces" {
     interface Container {
         client: ImperiaClient;
+    }
+}
+
+declare module "@sapphire/plugin-utilities-store" {
+    export interface Utilities {
+        service: ServiceUtilities;
+        time: TimeUtilities;
     }
 }
