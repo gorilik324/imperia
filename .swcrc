@@ -1,5 +1,5 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "$schema": "https://json.schemastore.org/swcrc",
     "jsc": {
         "minify": {
             "compress": {
@@ -15,7 +15,10 @@
         "baseUrl": "./src",
         "paths": {
             "#/extensions/*": ["./lib/extensions/*"],
-            "#/typings/*": ["./lib/typings/*"]
+            "#/typings/*": ["./lib/typings/*"],
+            "#/commands/*": ["./commands/*"],
+            "#/listeners/*": ["./listeners/*"],
+            "#/utilities/*": ["./utilities/*"]
         }
     },
     "module": {
