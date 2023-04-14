@@ -3,8 +3,8 @@ import { Utility } from "@sapphire/plugin-utilities-store";
 export class TimeUtilities extends Utility {
     /**
      * @description The constructor for the time utilities.
-     * @param context - The command context.
-     * @param options - The command options.
+     * @param context - The utility context.
+     * @param options - The utility options.
      */
     public constructor(context: Utility.Context, options: Utility.Options) {
         super(context, {

@@ -4,8 +4,8 @@ import { setTimeout } from "node:timers/promises";
 export class ServiceUtilities extends Utility {
     /**
      * @description The constructor for the service utilities.
-     * @param context - The command context.
-     * @param options - The command options.
+     * @param context - The utility context.
+     * @param options - The utility options.
      */
     public constructor(context: Utility.Context, options: Utility.Options) {
         super(context, {
