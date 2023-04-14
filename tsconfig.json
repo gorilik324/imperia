@@ -22,12 +22,21 @@
       "ESNext"
     ],
     "paths": {
+      "#/commands/*": [
+        "./commands/*"
+      ],
+      "#/listeners/*": [
+        "./listeners/*"
+      ],
+      "#/utilities/*": [
+        "./utilities/*"
+      ],
       "#/extensions/*": [
         "./lib/extensions/*"
       ],
       "#/typings/*": [
         "./lib/typings/*"
-      ],
+      ]
     }
   },
   "exclude": [
