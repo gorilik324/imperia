@@ -24,7 +24,7 @@
 
 import { ImperiaCommand } from "#/extensions/ImperiaCommand";
 import { RegisterBehavior } from "@sapphire/framework";
-import { InteractionResponse, SlashCommandBuilder, User, GuildMember, EmbedBuilder } from "discord.js";
+import { EmbedBuilder, GuildMember, InteractionResponse, SlashCommandBuilder, User } from "discord.js";
 
 /**
  * @description The about command.
@@ -71,6 +71,10 @@ export class AboutCommand extends ImperiaCommand {
         return this.showAvatar(interaction);
     }
 
+    /**
+     * @description Show the avatar(s) of a user.
+     * @param ctx - The command context.
+     */
     private async showAvatar(ctx: ImperiaCommand.ChatInputCommandInteraction): Promise<InteractionResponse> {
         const user: User = ctx.options.getUser("user") || ctx.user;
         const userInGuild: GuildMember = await ctx.guild.members.fetch(user.id);
