@@ -24,10 +24,12 @@
 
 import {
     ApplicationCommandRegistries,
+    container,
     RegisterBehavior,
     SapphireClient,
     SapphireClientOptions,
 } from "@sapphire/framework";
+import { PrismaClient } from "@prisma/client";
 import { ClientOptions } from "discord.js";
 
 /**
@@ -52,5 +54,7 @@ export class ImperiaClient extends SapphireClient {
 
         if (options.overrideApplicationCommandRegistries)
             ApplicationCommandRegistries.setDefaultBehaviorWhenNotIdentical(RegisterBehavior.BulkOverwrite);
+
+        container.prisma = new PrismaClient();
     }
 }

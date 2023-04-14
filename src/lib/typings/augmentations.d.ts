@@ -23,13 +23,14 @@
  */
 
 import { ImperiaClient } from "#/extensions/ImperiaClient";
-
+import { PrismaClient } from "@prisma/client";
 import { ServiceUtilities } from "../../utilities/service";
 import { TimeUtilities } from "../../utilities/time";
 
 declare module "@sapphire/pieces" {
     interface Container {
         client: ImperiaClient;
+        prisma: PrismaClient;
     }
 }
 
