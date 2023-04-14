@@ -25,6 +25,7 @@
 import "dotenv/config";
 import "@sapphire/plugin-logger/register";
 import "@sapphire/plugin-subcommands/register";
+import "@sapphire/plugin-utilities-store/register";
 import { createColors } from "colorette";
 import { ImperiaClient } from "#/extensions/ImperiaClient";
 import { configuration } from "./configuration";
