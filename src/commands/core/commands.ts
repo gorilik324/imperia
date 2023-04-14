@@ -24,7 +24,7 @@
 
 import { ImperiaCommand } from "#/extensions/ImperiaCommand";
 import { Command, CommandStore, RegisterBehavior } from "@sapphire/framework";
-import { SlashCommandBuilder } from "discord.js";
+import { chatInputApplicationCommandMention, Collection, ComponentType, SlashCommandBuilder } from "discord.js";
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
 
 /**
@@ -69,31 +69,66 @@ export class CommandsListCommand extends ImperiaCommand {
         await interaction.deferReply();
 
         const commands: CommandStore = this.container.stores.get("commands");
+        const categories: string[] = [...new Set(commands.map((cmd: ImperiaCommand) => cmd.category))];
         const paginate: PaginatedMessage = new PaginatedMessage();
 
-        const categoryFilter = (category: string) => (cmd: ImperiaCommand) => cmd.category === category;
-        const commandsToString = (category: string): string => {
-            return commands
-                .filter(categoryFilter(category))
-                .map((cmd: Command) => `\`${cmd.name}\``)
-                .join(", ");
-        };
-        const returnFieldOptions = (category: string): [string, string] => {
-            return [`—  ${category}`, commandsToString(category.toLowerCase())];
-        };
+        for (const category of categories) {
+            const categoryCommands: Collection<string, Command> = commands.filter(
+                (cmd: Command): boolean => cmd.category === category
+            );
 
-        const fields: [string, string][] = ["Core"].map(returnFieldOptions);
-        const grouped: Generator<[string, string][]> = this.groupArrayInto2dArray(fields, 2);
+            const fields: ImperiaCommand[][] = [
+                ...CommandsListCommand.groupArrayInto2dArray(
+                    categoryCommands.map((cmd: ImperiaCommand) => cmd),
+                    3
+                ),
+            ];
 
-        for (const chunk of grouped) {
+            const commandFields: {
+                name: `</${string}:${string}>`;
+                value: string;
+                inline: boolean;
+            }[] = fields.flatMap((field) => {
+                return field.map((cmd: ImperiaCommand) => {
+                    const commandId: string = this.container.applicationCommandRegistries.acquire(
+                        cmd.name
+                    ).globalCommandId;
+                    const command: `</${string}:${string}>` = chatInputApplicationCommandMention(cmd.name, commandId);
+                    return { name: command, value: `${cmd.description}`, inline: true };
+                });
+            });
+
             paginate.addPageEmbed((embed) => {
-                for (let i = 0; i < chunk.length; i++) {
-                    const field: [string, string] = chunk[i];
-                    embed.addFields({ name: field[0], value: field[1], inline: true });
-                }
+                embed.setTitle(`${category.charAt(0).toUpperCase() + category.slice(1)} Commands`);
+                embed.addFields(commandFields);
                 return embed;
             });
         }
+
+        const selectMenuOptions: {
+            label: string;
+            description: string;
+            value: string;
+        }[] = categories.map((category) => ({
+            label: category.charAt(0).toUpperCase() + category.slice(1),
+            description: `View ${category.charAt(0).toUpperCase() + category.slice(1)}-related commands.`,
+            value: category,
+        }));
+
+        paginate.setActions([
+            {
+                customId: "help-command-experimental",
+                type: ComponentType.StringSelect,
+                emoji: "🧪",
+                options: selectMenuOptions,
+                placeholder: "Select a category...",
+                run: ({ handler, interaction }) => {
+                    if (interaction.isStringSelectMenu()) {
+                        handler.index = categories.indexOf(interaction.values[0]);
+                    }
+                },
+            },
+        ]);
 
         return paginate.run(interaction);
     }
@@ -103,7 +138,7 @@ export class CommandsListCommand extends ImperiaCommand {
      * @param array - The array to group.
      * @param size - The size of the 2d array.
      */
-    private *groupArrayInto2dArray<T>(array: T[], size: number): Generator<T[]> {
+    private static *groupArrayInto2dArray<T>(array: T[], size: number): Generator<T[]> {
         const total: number = array.length;
         let i = 0;
         let tempIndex = 0;
