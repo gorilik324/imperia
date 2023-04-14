@@ -23,7 +23,6 @@
  */
 
 import { Utility } from "@sapphire/plugin-utilities-store";
-import { setTimeout } from "node:timers/promises";
 
 /**
  * @description The service utilities.
@@ -68,13 +67,5 @@ export class ServiceUtilities extends Utility {
      */
     public trimString(str: string, length: number): string {
         return str.length > length ? str.substring(0, length) + "..." : str;
-    }
-
-    /**
-     * @description Wait before fulfilling the promise.
-     * @param ms - The time to wait.
-     */
-    public wait(ms: number): Promise<void> {
-        return setTimeout(ms);
     }
 }
