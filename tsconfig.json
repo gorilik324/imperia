@@ -34,6 +34,9 @@
       "#/extensions/*": [
         "./lib/extensions/*"
       ],
+      "#/utils/*": [
+        "./lib/utils/*"
+      ],
       "#/typings/*": [
         "./lib/typings/*"
       ]

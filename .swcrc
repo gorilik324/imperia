@@ -18,7 +18,8 @@
             "#/typings/*": ["./lib/typings/*"],
             "#/commands/*": ["./commands/*"],
             "#/listeners/*": ["./listeners/*"],
-            "#/utilities/*": ["./utilities/*"]
+            "#/utilities/*": ["./utilities/*"],
+            "#/utils/*": ["./lib/utils/*"]
         }
     },
     "module": {
