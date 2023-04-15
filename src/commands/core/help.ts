@@ -81,6 +81,8 @@ export class HelpCommand extends ImperiaCommand {
 
         for (const category of categories) {
             if (category === "primary") continue;
+            if (category === "developer" && !this.container.utilities.service.checkDeveloper(interaction.user.id))
+                continue;
 
             const categoryCommands: Collection<string, Command> = commands.filter(
                 (cmd: Command): boolean => cmd.category === category
@@ -102,7 +104,10 @@ export class HelpCommand extends ImperiaCommand {
                     const commandId: string = this.container.applicationCommandRegistries.acquire(
                         cmd.name
                     ).globalCommandId;
-                    const command: `</${string}:${string}>` = chatInputApplicationCommandMention(cmd.name, commandId);
+                    let command;
+
+                    if (!commandId) command = `/${cmd.name}`;
+                    else command = chatInputApplicationCommandMention(cmd.name, commandId);
                     return { name: command, value: `${cmd.description}`, inline: true };
                 });
             });
