@@ -31,7 +31,7 @@ import dayjs from "dayjs";
  * @description The Serverinfo command.
  * @extends ImperiaCommand
  */
-export class ServerinfoCommand extends ImperiaCommand {
+export class ServerInfoCommand extends ImperiaCommand {
     /**
      * @description The constructor for the about command.
      * @param context - The command context.
@@ -102,12 +102,9 @@ export class ServerinfoCommand extends ImperiaCommand {
             features: {
                 boostLevel: premiumTier[ctx.guild.premiumTier],
                 boostCount: ctx.guild.premiumSubscriptionCount,
-                verifiedStatus: ctx.guild.verified ? "Verified" : "No Verified",
-                partneredStatus: ctx.guild.partnered ? "Partnered" : "No Partnered",
-                vanityURL:
-                    ctx.guild.premiumTier === GuildPremiumTier.Tier3
-                        ? `https://discord.gg/${ctx.guild.vanityURLCode}`
-                        : "No Vanity URL",
+                verifiedStatus: ctx.guild.verified ? "Verified" : "Not Verified",
+                partneredStatus: ctx.guild.partnered ? "Partnered" : "Not Partnered",
+                vanityURL: ctx.guild.vanityURLCode == null ? "-" : `https://discord.gg/${ctx.guild.vanityURLCode}`,
             },
         };
     }
