@@ -22,4 +22,12 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @description The bot's developers.
+ */
 export const DEVELOPERS: string[] = ["327849142774923266", "387886389800337409"];
+
+/**
+ * @description The bot's development servers.
+ */
+export const DEVELOPMENT_SERVERS: string[] = ["909618952634781716"];
