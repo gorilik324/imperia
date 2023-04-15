@@ -2,7 +2,7 @@
     "name": "imperia",
     "main": "dist/index.js",
     "private": true,
-    "version": "0.2.0",
+    "version": "0.3.0",
     "packageManager": "yarn@3.5.0",
     "scripts": {
         "build": "yarn run-s rimraf compile",
