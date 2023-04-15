@@ -41,7 +41,7 @@ export class ServerInfoCommand extends ImperiaCommand {
         super(context, {
             ...options,
             name: "serverinfo",
-            description: "Display information about server.",
+            description: "Display information about the server.",
         });
     }
 
