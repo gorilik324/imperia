@@ -23,7 +23,6 @@
  */
 
 import { Precondition, PreconditionResult } from "@sapphire/framework";
-import { DEVELOPERS } from "#/utils/constants";
 import { CommandInteraction } from "discord.js";
 
 /**
@@ -44,11 +43,8 @@ export class DeveloperOnlyPrecondition extends Precondition {
      * @param id - The user ID.
      */
     private checkOwner(id: string): PreconditionResult {
-        return DEVELOPERS.includes(id)
+        return this.container.utilities.service.checkDeveloper(id)
             ? this.ok()
-            : this.error({
-                  identifier: "DeveloperOnly",
-                  message: "You are not a developer.",
-              });
+            : this.error({ identifier: "DeveloperOnly" });
     }
 }

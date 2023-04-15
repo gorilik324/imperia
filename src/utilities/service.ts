@@ -23,6 +23,8 @@
  */
 
 import { Utility } from "@sapphire/plugin-utilities-store";
+import { DEVELOPERS } from "#/utils/constants";
+import { Snowflake } from "discord.js";
 
 /**
  * @description The service utilities.
@@ -37,8 +39,16 @@ export class ServiceUtilities extends Utility {
     public constructor(context: Utility.Context, options: Utility.Options) {
         super(context, {
             ...options,
-            name: "time",
+            name: "service",
         });
+    }
+
+    /**
+     * @description Check if the user is a developer.
+     * @param id - The user id.
+     */
+    public checkDeveloper(id: string | Snowflake): boolean {
+        return DEVELOPERS.includes(id);
     }
 
     /**
