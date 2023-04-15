@@ -1,5 +1,20 @@
 
 
+## [0.3.1](https://github.com/aeviterna/imperia/compare/0.3.0...0.3.1) (2023-04-15)
+
+
+### Bug Fixes
+
+* **Augmentation:** add `DeveloperOnly` into Sapphire preconditions ([ebf6c87](https://github.com/aeviterna/imperia/commit/ebf6c871bac1d233d8f0cedc492a0c65f27401d6))
+
+
+### Features
+
+* **Command:** add a command to evaluate javascript code ([2a3613c](https://github.com/aeviterna/imperia/commit/2a3613c415221addda881a2cca460b853f000f8c))
+* **constants:** add a list of development server ids ([351b157](https://github.com/aeviterna/imperia/commit/351b157a7f85302924b701959c66069cd848af34))
+* **constants:** add developer discord user ids ([1b7328f](https://github.com/aeviterna/imperia/commit/1b7328f2e6feb82bb5be4000a7793801066a372c))
+* **Precondition:** add a developer only precondition ([d82b8fb](https://github.com/aeviterna/imperia/commit/d82b8fb3ff3c45ebe68908c9d73f829581ac1ba1))
+
 # [0.3.0](https://github.com/aeviterna/imperia/compare/0.2.0...0.3.0) (2023-04-15)
 
 
