@@ -28,12 +28,12 @@ import { EmbedBuilder, InteractionResponse, SlashCommandBuilder, codeBlock, Guil
 import dayjs from "dayjs";
 
 /**
- * @description The Serverinfo command.
+ * @description The server info command.
  * @extends ImperiaCommand
  */
 export class ServerInfoCommand extends ImperiaCommand {
     /**
-     * @description The constructor for the about command.
+     * @description The constructor for the server info command.
      * @param context - The command context.
      * @param options - The command options.
      */
