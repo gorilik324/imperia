@@ -23,8 +23,9 @@
  */
 
 import { ImperiaCommand } from "#/extensions/ImperiaCommand";
-import { RegisterBehavior } from "@sapphire/framework";
-import { InteractionResponse, SlashCommandBuilder } from "discord.js";
+import { Command, CommandStore, RegisterBehavior } from "@sapphire/framework";
+import { chatInputApplicationCommandMention, Collection, ComponentType, SlashCommandBuilder } from "discord.js";
+import { PaginatedMessage } from "@sapphire/discord.js-utilities";
 
 /**
  * @description The help command.
@@ -40,7 +41,7 @@ export class HelpCommand extends ImperiaCommand {
         super(context, {
             ...options,
             name: "help",
-            description: "Get help with the bot or a specific command.",
+            description: "Retrive a helpful information about the bot and its available commands.",
         });
     }
 
@@ -64,9 +65,111 @@ export class HelpCommand extends ImperiaCommand {
      * @description Run the command.
      * @param interaction - The command interaction.
      */
-    public async chatInputRun(interaction: ImperiaCommand.ChatInputCommandInteraction): Promise<InteractionResponse> {
-        return interaction.reply({
-            content: "Hello, Imperia!",
+    public async chatInputRun(interaction: ImperiaCommand.ChatInputCommandInteraction): Promise<PaginatedMessage> {
+        await interaction.deferReply();
+
+        const commands: CommandStore = this.container.stores.get("commands");
+        const categories: string[] = [...new Set(commands.map((cmd: ImperiaCommand) => cmd.category))];
+        categories.unshift("primary");
+        const paginate: PaginatedMessage = new PaginatedMessage();
+
+        paginate.addPageEmbed((embed) => {
+            embed.setTitle(`Help`);
+            embed.setDescription("TBA.");
+            return embed;
         });
+
+        for (const category of categories) {
+            if (category === "primary") continue;
+
+            const categoryCommands: Collection<string, Command> = commands.filter(
+                (cmd: Command): boolean => cmd.category === category
+            );
+
+            const fields: ImperiaCommand[][] = [
+                ...HelpCommand.groupArrayInto2dArray(
+                    categoryCommands.map((cmd: ImperiaCommand) => cmd),
+                    3
+                ),
+            ];
+
+            const commandFields: {
+                name: `</${string}:${string}>`;
+                value: string;
+                inline: boolean;
+            }[] = fields.flatMap((field) => {
+                return field.map((cmd: ImperiaCommand) => {
+                    const commandId: string = this.container.applicationCommandRegistries.acquire(
+                        cmd.name
+                    ).globalCommandId;
+                    const command: `</${string}:${string}>` = chatInputApplicationCommandMention(cmd.name, commandId);
+                    return { name: command, value: `${cmd.description}`, inline: true };
+                });
+            });
+
+            paginate.addPageEmbed((embed) => {
+                embed.setTitle(`${category.charAt(0).toUpperCase() + category.slice(1)} Commands`);
+                embed.addFields(commandFields);
+                return embed;
+            });
+        }
+
+        const selectMenuOptions: {
+            label: string;
+            description: string;
+            value: string;
+        }[] = [];
+
+        selectMenuOptions.push(
+            ...categories.map((category) => ({
+                label: category.charAt(0).toUpperCase() + category.slice(1),
+                description:
+                    category === "primary"
+                        ? "View the primary page."
+                        : `View ${category.charAt(0).toUpperCase() + category.slice(1)}-related commands.`,
+                value: category,
+            }))
+        );
+
+        paginate.setActions([
+            {
+                customId: "help-command-experimental",
+                type: ComponentType.StringSelect,
+                emoji: "🧪",
+                options: selectMenuOptions,
+                placeholder: "Select a category...",
+                run: ({ handler, interaction }) => {
+                    if (interaction.isStringSelectMenu()) {
+                        handler.index = categories.indexOf(interaction.values[0]);
+                    }
+                },
+            },
+        ]);
+
+        return paginate.run(interaction);
+    }
+
+    /**
+     * @description Group an array into a 2d array.
+     * @param array - The array to group.
+     * @param size - The size of the 2d array.
+     */
+    private static *groupArrayInto2dArray<T>(array: T[], size: number): Generator<T[]> {
+        const total: number = array.length;
+        let i = 0;
+        let tempIndex = 0;
+        let tempArray: T[] = [];
+        while (total > i) {
+            const current = array[i];
+            tempArray.push(current);
+            if (tempIndex === size - 1) {
+                yield tempArray;
+                tempArray = [];
+                tempIndex = -1;
+            }
+            tempIndex++;
+            i++;
+        }
+        if (tempArray.length) yield tempArray;
     }
 }
