@@ -51,7 +51,7 @@ export const configuration: ImperiaClientOptions = {
     ],
     loadApplicationCommandRegistriesStatusListeners: process.env.NODE_ENV === "production",
     loadDefaultErrorListeners: true,
-    loadMessageCommandListeners: true,
+    loadMessageCommandListeners: false,
     logger: {
         level: process.env.NODE_ENV === "production" ? LogLevel.Info : LogLevel.Debug,
     },
