@@ -22,28 +22,36 @@
  * THE SOFTWARE.
  */
 
-import { ImperiaClient } from "#/extensions/ImperiaClient";
-import { PrismaClient } from "@prisma/client";
-import { ServiceUtilities } from "#/utilities/service";
-import { TimeUtilities } from "#/utilities/time";
+import { Precondition, PreconditionResult, Result } from "@sapphire/framework";
+import { CommandInteraction } from "discord.js";
+import { User as PrismaUser } from ".prisma/client";
 
-declare module "@sapphire/pieces" {
-    interface Container {
-        client: ImperiaClient;
-        prisma: PrismaClient;
+/**
+ * @description The developer only precondition.
+ * @extends Precondition
+ */
+export class RegisteredUserOnlyPrecondition extends Precondition {
+    /**
+     * @description Run the precondition.
+     * @param interaction - The interaction.
+     */
+    public override async chatInputRun(interaction: CommandInteraction) {
+        return this.checkUser(interaction.user.id);
     }
-}
 
-declare module "@sapphire/framework" {
-    interface Preconditions {
-        DeveloperOnly: never;
-        RegisteredUserOnly: never;
-    }
-}
+    /**
+     * @description Check if the user is a developer.
+     * @param id - The user ID.
+     */
+    private async checkUser(id: string): Promise<PreconditionResult> {
+        const getUser: Result<PrismaUser, unknown> = await Result.fromAsync(() =>
+            this.container.prisma.user.findUnique({
+                where: {
+                    discordId: id,
+                },
+            })
+        );
 
-declare module "@sapphire/plugin-utilities-store" {
-    export interface Utilities {
-        service: ServiceUtilities;
-        time: TimeUtilities;
+        return getUser.isOk() ? this.ok() : this.error({ identifier: "RegisteredUserOnly" });
     }
 }
