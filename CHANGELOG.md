@@ -1,5 +1,19 @@
 
 
+## [0.3.2](https://github.com/aeviterna/imperia/compare/0.3.1...0.3.2) (2023-04-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency colorette to v2.0.20 ([#25](https://github.com/aeviterna/imperia/issues/25)) ([f3e1ef4](https://github.com/aeviterna/imperia/commit/f3e1ef497ebf1371320aa87b76fd4285b2cc99e3))
+
+
+### Features
+
+* **Command:** add a account registration command ([b8204a3](https://github.com/aeviterna/imperia/commit/b8204a317b02b41d6716ecfccebb5f542c70305b))
+* **command:** add a command to unregister and delete user ([22412da](https://github.com/aeviterna/imperia/commit/22412daf2962a3e66fbc76aa2658b2afbb976486))
+* **Precondition:** add a precondition to check for registered user ([41722e1](https://github.com/aeviterna/imperia/commit/41722e1660ad617829383c146ed4115bdfebc48b))
+
 ## [0.3.1](https://github.com/aeviterna/imperia/compare/0.3.0...0.3.1) (2023-04-15)
 
 
