@@ -807,9 +807,11 @@ __metadata:
   linkType: hard
 
 "@sapphire/result@npm:^2.6.1":
-  version: 2.6.1
-  resolution: "@sapphire/result@npm:2.6.1"
-  checksum: 22c2167c821d4842d430938a3c93a1f4cc7ba5b5dec9060235cca99a9094f0cacea554c0e42afa028dd236a95cc1f8fb83bf624038c3b0c8ce208b136479d0c8
+  version: 2.6.2
+  resolution: "@sapphire/result@npm:2.6.2"
+  dependencies:
+    tslib: ^2.5.0
+  checksum: 8ee850ba29cbf6d862c34084eb316f8b4ac0f12cb3adb1f7d74580b34bff4d4196735f2957bcea0471866f700af2dc0041d9ecabe1622d2f8e2d94d3a868eb0e
   languageName: node
   linkType: hard
 
